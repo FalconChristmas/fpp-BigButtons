@@ -9,6 +9,25 @@ require 'bb-common.php';
 <script src="/plugin.php?plugin=fpp-BigButtons&page=fa-icons.js&nopage=1"></script>
 <script src="/plugin.php?plugin=fpp-BigButtons&page=config.js&nopage=1"></script>
 
+
+<script language="Javascript">
+extraCommands = [
+{
+    "name": "Browser URL",
+    "args": [
+        {
+            "description": "URL",
+            "name": "URL",
+            "optional": false,
+            "type": "string"
+        }
+    ],
+    "supportsMulticast" : false
+}
+];
+</script>
+
+
 <template class="buttonTabTemplate">
     <li class="buttonTab">
         <div class="buttonTabInner">

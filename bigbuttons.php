@@ -15,13 +15,14 @@ printf("<script type='text/javascript' src='js/%s'></script>\n", basename($jquer
 <link rel="stylesheet" href="css/fpp-bootstrap/dist/fpp-bootstrap.css" />
 <script type="text/javascript">
 var pluginJson;
-var fppVersionTriplet;
 
 function sendButtonCommand(tab_i,j)
 {    
-    var url = "api/command/";   
-    
-    if (fppVersionTriplet != "3.5.0") { 
+    if (pluginJson[tab_i]["buttons"][j]["command"] == "Browser URL") {
+        var url = pluginJson[tab_i]["buttons"][j]["args"][0];
+        window.location.href = url;
+    } else {
+        var url = "api/command/";
         var data = new Object();
         data["command"] = pluginJson[tab_i]["buttons"][j]["command"];
 		data["args"] = pluginJson[tab_i]["buttons"][j]["args"];
@@ -41,14 +42,7 @@ function sendButtonCommand(tab_i,j)
             success: function (data) {
             }
         });
-     } else { 
-        $.each( pluginJson[tab_i]["buttons"][j]["args"], function(i, v) {
-           url += "/";
-           url += encodeURIComponent(v);
-        });
-        $.get(url);
     }
-
 }
 function lerp(x, y, a) {
  return x * (1 - a) + y * a;
@@ -97,9 +91,6 @@ function SetCurrentTab(i){
     document.title = $('.bb-nav-item[data-tab-index='+i+']').html();
 }
 $(function(){
-
-    fppVersionTriplet=$('body').data('fpp-version-triplet');
-
     $.get('api/configfile/plugin.fpp-BigButtons.json')
     .done(function(data) {
         processBigButtonConfig(data);
