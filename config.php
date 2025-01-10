@@ -3,11 +3,11 @@ require 'bb-common.php';
 ?>
 
 <div id="global" class="settings">
-<link  rel="stylesheet" href="/jquery/colpick/css/colpick.css"/>
-<link  rel="stylesheet" href="/plugin.php?plugin=fpp-BigButtons&file=config.css&nopage=1"/>
-<script src="/jquery/colpick/js/colpick.js"></script>
-<script src="/plugin.php?plugin=fpp-BigButtons&file=fa-icons.js&nopage=1"></script>
-<script src="/plugin.php?plugin=fpp-BigButtons&file=config.js&nopage=1"></script>
+<link  rel="stylesheet" href="jquery/colpick/css/colpick.css"/>
+<link  rel="stylesheet" href="plugin.php?plugin=fpp-BigButtons&file=config.css&nopage=1"/>
+<script src="jquery/colpick/js/colpick.js"></script>
+<script src="plugin.php?plugin=fpp-BigButtons&file=fa-icons.js&nopage=1"></script>
+<script src="plugin.php?plugin=fpp-BigButtons&file=config.js&nopage=1"></script>
 
 
 <script language="Javascript">
