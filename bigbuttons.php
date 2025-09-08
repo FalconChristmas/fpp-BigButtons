@@ -2,11 +2,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 <?
     include 'common/htmlMeta.inc';
-    require_once "common.php";
     require_once 'config.php';
-require_once("bb-common.php");
-require_once("fppversion.php");
+	require_once "common.php";
     include 'common/menuHead.inc';
+	require_once("bb-common.php");
+	require_once("fppversion.php");
 
 $jquery = glob("$fppDir/www/js/jquery-*.min.js");
 printf("<script type='text/javascript' src='js/%s'></script>\n", basename($jquery[0]));
