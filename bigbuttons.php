@@ -1,18 +1,17 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 <?
-require_once("config.php");
-require_once("common.php");
+    include 'common/htmlMeta.inc';
+    require_once "common.php";
+    require_once 'config.php';
 require_once("bb-common.php");
 require_once("fppversion.php");
+    include 'common/menuHead.inc';
 
 $jquery = glob("$fppDir/www/js/jquery-*.min.js");
 printf("<script type='text/javascript' src='js/%s'></script>\n", basename($jquery[0]));
 ?>
-<script src="js/jquery.jgrowl.min.js"> </script> 
-<link rel="stylesheet" href="css/fontawesome.all.min.css" />
-<link rel="stylesheet" href="css/jquery.jgrowl.min.css" />
-<link rel="stylesheet" href="css/fpp-bootstrap/dist/fpp-bootstrap.css" />
+
 <script type="text/javascript">
 var pluginJson;
 
