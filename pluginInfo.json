@@ -28,17 +28,23 @@
 		{
 			"minFPPVersion": "7.0",
 			"maxFPPVersion": "7.99",
-			"branch": "master",
+			"branch": "27f3c82438fdc2f19a54d2f7c9cadfa590031622",
 			"sha": ""
 		},
 		{
             "minFPPVersion": "8.0",
             "maxFPPVersion": "0",
-            "branch": "master",
+            "branch": "27f3c82438fdc2f19a54d2f7c9cadfa590031622",
             "sha": ""
         },
 		{
 			"minFPPVersion": "9.0",
+			"maxFPPVersion": "9.1",
+			"branch": "27f3c82438fdc2f19a54d2f7c9cadfa590031622",
+			"sha": ""
+		},
+				{
+			"minFPPVersion": "9.2",
 			"maxFPPVersion": "0",
 			"branch": "master",
 			"sha": ""
