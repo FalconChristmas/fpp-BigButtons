@@ -58,13 +58,20 @@
 		}
 	],
 	"privacy": {
-		"summary": "Adds a page of big buttons to the player's web interface. Each button does one thing you pick from the player's own list of actions, or opens a web address. It contacts nothing on the internet.",
-		"sends": [],
-		"collects": [],
-		"sensors": [],
-		"remoteAccess": "none",
-		"systemChanges": [],
-		"closedCode": false,
-		"other": "Your button layout is kept in a settings file on the player and is not removed if you uninstall the plugin. A button can do anything the player's own action list allows, including running a script you wrote, and you can choose to have a button also trigger the same action on your other players on your home network. Nothing is recorded about who pressed a button."
+	 "summary": "Adds a page of big buttons to the player's web interface. Each button runs an action from the player's own list or opens a web address, and can also send that action to other FPP players you pick.",
+	 "sends": [
+	  {
+	   "to": "the other FPP players you pick",
+	   "what": "the button's command and its settings",
+	   "why": "to run the same action on those players",
+	   "alwaysOn": false
+	  }
+	 ],
+	 "collects": [],
+	 "sensors": [],
+	 "remoteAccess": "none",
+	 "systemChanges": [],
+	 "closedCode": false,
+	 "other": "Your button layout is kept in a settings file on the player and is not removed if you uninstall the plugin. A button can do anything the player's own action list allows, including running a script you wrote. Nothing is recorded about who pressed a button."
 	}
 }
