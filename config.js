@@ -146,9 +146,75 @@ function setTabColor($buttonList,hex){
   $buttonList.data('color',hex);
   $('.bb_setButtonTabColor').colpickSetColor(hex)
 }
+// The command table lives in the button row under a generated id pair:
+//   select: button_<tab>-<row>_Command
+//   table:  tableButton<tab>-<row>
+function bbCommandTableId(commandSelectId){
+    return 'tableButton'+String(commandSelectId).replace(/^button_/, '').replace(/_Command$/, '');
+}
+
+// FPP 10.x's If command exposes two "+ Add Command" buttons (Then Run /
+// Otherwise Run).  Those call AddCommandListRow() -> CaptureOuterEditorAndOpenNested()
+// -> ShowCommandEditor(), which uses FPP's single shared #commandEditorPopup
+// and reads the commandEditorTarget/Callback/CancelCallback globals set up by
+// commandEditor.php.  Our old code wrapped the table in its own fppDialog, so
+// commandEditor.php was never loaded and those globals were undefined - the
+// nested picker threw a ReferenceError before it could open.  Use FPP's own
+// editor as the outer editor instead, and write the accepted command back into
+// the button's table from a global callback (commandEditor.php invokes
+// window[callback], so these must stay global).
+
+// FPP's editor is rendered without configAdjustable, so its Save drops any
+// "adjustable" arg flags the button already had (bigbuttons.php uses those to
+// show a slider/text input on the button).  Stash the pre-edit command and put
+// those flags back on accept - harmless if the command itself was replaced.
+var bbPriorCommandData = {};
+function BBCommandEditorSaved(target, data){
+    var commandSelectId = target;
+    var $commandSelect = $('#'+commandSelectId);
+    var prior = bbPriorCommandData[commandSelectId];
+    delete bbPriorCommandData[commandSelectId];
+    if (!$commandSelect.length){
+        return;
+    }
+    data = data || {};
+    if (prior && prior.adjustable && !data.adjustable){
+        data.adjustable = prior.adjustable;
+    }
+    // configAdjustable=true keeps the same arg UI (and adjustable values) the
+    // plugin has always used when loading a command into a button's table.
+    PopulateExistingCommand(data, commandSelectId, bbCommandTableId(commandSelectId), true);
+    setButtonCommandSummaryTitle($commandSelect.closest('.bb_configRow'), data.command ? data.command : '');
+}
+function BBCommandEditorCancelled(target){
+    // Nothing was committed - the button keeps its previously saved command.
+    delete bbPriorCommandData[target];
+}
+
 function launchButtonConfigModal($buttonRow){
+    var $commandSelect = $buttonRow.find('.buttonCommand');
+    var commandSelectId = $commandSelect.attr('id');
+    var title = 'Command for '+($buttonRow.find('.buttonTitle').val()==''?'New Button':$buttonRow.find('.buttonTitle').val());
+
+    if (typeof ShowCommandEditor === 'function' && commandSelectId){
+        var data = {};
+        if ($commandSelect.val()){
+            data = CommandToJSON(commandSelectId, bbCommandTableId(commandSelectId), {});
+        }
+        bbPriorCommandData[commandSelectId] = data;
+        ShowCommandEditor(commandSelectId, data, 'BBCommandEditorSaved', 'BBCommandEditorCancelled', {
+            title: title,
+            saveButton: 'Done',
+            cancelButton: 'Cancel',
+            showPresetSelect: false
+        });
+        return;
+    }
+
+    // Legacy fallback for FPP versions without ShowCommandEditor: keep the
+    // original self-contained modal so those installs behave exactly as before.
     $buttonRow.find('.buttonCommandWrap').fppDialog({
-        title: 'Command for '+($buttonRow.find('.buttonTitle').val()==''?'New Button':$buttonRow.find('.buttonTitle').val()),
+        title: title,
         buttons:{
             Done:{
                 click:function(){
