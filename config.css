@@ -400,6 +400,11 @@
   .buttonTab.bb-active .buttonPageTitleValue{
     color:#fff;
   }
+  /* FPP's dark mode gives .pageContent a #171720 background, so the
+     hard-coded dark text above is invisible on inactive tabs. */
+  [data-bs-theme="dark"] .buttonTab:not(.bb-active) .buttonPageTitleValue{
+    color:#dee2e6;
+  }
   .buttonTab.ui-droppable-hover .buttonTabInner {
       transform:scale(1.1);
       border:1px solid rgba(0,0,0,0.15);
